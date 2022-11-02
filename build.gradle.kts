@@ -1,10 +1,9 @@
-import org.gradle.kotlin.dsl.*
-
 plugins {
     `java-gradle-plugin` // Injects the plugin classpath into the tests
     kotlin("jvm") version "1.7.20"
     id("org.danilopianini.git-sensitive-semantic-versioning-gradle-plugin") version "0.3.20"
     id("com.gradle.plugin-publish") version "1.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
 group = "org.danilopianini"
@@ -69,4 +68,10 @@ pluginBundle { // These settings are set for the whole plugin bundle
     website = "https://danysk.github.io/Course-Laboratory-of-Software-Systems/"
     vcsUrl = "https://github.com/DanySK/Course-Laboratory-of-Software-Systems"
     tags = listOf("example", "greetings", "lss", "unibo")
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        allWarningsAsErrors = true
+    }
 }
