@@ -13,6 +13,11 @@ repositories {
     mavenCentral()
 }
 
+gitSemVer {
+    buildMetadataSeparator.set("-")
+    maxVersionLength.set(20)
+}
+
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(gradleApi())
