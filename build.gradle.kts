@@ -1,9 +1,11 @@
 plugins {
     `java-gradle-plugin` // Injects the plugin classpath into the tests
-    kotlin("jvm") version "1.7.20"
-    id("org.danilopianini.git-sensitive-semantic-versioning-gradle-plugin") version "0.3.20"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.gitSemVer)
     id("com.gradle.plugin-publish") version "1.0.0"
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.danilopianini.gradle-kotlin-qa") version "0.27.0"
+    alias(libs.plugins.dokka)
+    signing
 }
 
 group = "org.danilopianini"
@@ -74,4 +76,14 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         allWarningsAsErrors = true
     }
+}
+
+tasks.register<Jar>("javadocJar") {
+    from(tasks.dokkaJavadoc.get().outputDirectory)
+    archiveClassifier.set("javadoc")
+}
+
+tasks.register<Jar>("sourceJar") {
+    from(sourceSets.named("main").get().allSource)
+    archiveClassifier.set("sources")
 }
