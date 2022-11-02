@@ -23,3 +23,27 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+
+tasks.test {
+    javaLauncher.set(
+        javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(8))
+        }
+    )
+}
+val testWithJVM18 by tasks.registering(Test::class) { // Also works with JavaExec
+    javaLauncher.set(
+        javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(18))
+        }
+    )
+} // You can pick JVM's not yet supported by Gradle!
+tasks.check {
+    dependsOn(testWithJVM18)
+}
