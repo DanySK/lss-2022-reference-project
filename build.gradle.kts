@@ -6,8 +6,6 @@ plugins {
     id("org.danilopianini.git-sensitive-semantic-versioning-gradle-plugin") version "0.3.20"
 }
 
-version = "0.1.0"
-
 repositories {
     mavenCentral()
 }
