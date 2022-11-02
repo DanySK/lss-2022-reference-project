@@ -13,7 +13,7 @@ class TestGreetingPlugin : StringSpec (
         "the plugin should load" {
             val buildFile = """
                 plugins {
-                    id("it.unibo.greetings.pluto")
+                    id("org.danilopianini.lss2022.helloplugin")
                 }
                 
                 greetings {

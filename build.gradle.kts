@@ -4,7 +4,10 @@ plugins {
     `java-gradle-plugin` // Injects the plugin classpath into the tests
     kotlin("jvm") version "1.7.20"
     id("org.danilopianini.git-sensitive-semantic-versioning-gradle-plugin") version "0.3.20"
+    id("com.gradle.plugin-publish") version "1.0.0"
 }
+
+group = "org.danilopianini"
 
 repositories {
     mavenCentral()
@@ -44,4 +47,21 @@ val testWithJVM18 by tasks.registering(Test::class) { // Also works with JavaExe
 } // You can pick JVM's not yet supported by Gradle!
 tasks.check {
     dependsOn(testWithJVM18)
+}
+
+gradlePlugin {
+    plugins {
+        create("") { // One entry per plugin
+            id = "${project.group}.${project.name}"
+            displayName = "LSS Greeting plugin"
+            description = "Example plugin for the LSS course"
+            implementationClass = "it.unibo.gradle.plugin.greetings.GreetingPlugin"
+        }
+    }
+}
+
+pluginBundle { // These settings are set for the whole plugin bundle
+    website = "https://danysk.github.io/Course-Laboratory-of-Software-Systems/"
+    vcsUrl = "https://github.com/DanySK/Course-Laboratory-of-Software-Systems"
+    tags = listOf("example", "greetings", "lss", "unibo")
 }
