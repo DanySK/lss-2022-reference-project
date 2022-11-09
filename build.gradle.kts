@@ -6,6 +6,8 @@ plugins {
     id("org.danilopianini.gradle-kotlin-qa") version "0.27.0"
     alias(libs.plugins.dokka)
     signing
+    `maven-publish`
+    id("com.dorongold.task-tree") version "2.1.0"
 }
 
 group = "org.danilopianini"
@@ -78,12 +80,54 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     }
 }
 
-tasks.register<Jar>("javadocJar") {
+val javadocJar by tasks.registering(Jar::class) {
     from(tasks.dokkaJavadoc.get().outputDirectory)
     archiveClassifier.set("javadoc")
 }
 
-tasks.register<Jar>("sourceJar") {
+val sourceJar by tasks.registering(Jar::class) {
     from(sourceSets.named("main").get().allSource)
     archiveClassifier.set("sources")
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            // Pass the pwd via -PmavenCentralPwd='yourPassword'
+            val mavenCentralPwd: String? by project
+            credentials {
+                username = "danysk"
+                password = mavenCentralPwd
+            }
+        }
+        publications {
+            val lssGreetings by creating(MavenPublication::class) {
+                from(components["java"])
+                // If the gradle-publish-plugins plugin is applied, these are pre-configured
+                // artifact(javadocJar)
+                // artifact(sourceJar)
+                pom {
+                    name.set("Greetings plugin")
+                    description.set("A test plugin")
+                    url.set("https://github.com/DanySK/lss-deleted-soon")
+                    licenses {
+                        license {
+                            name.set("MIT")
+                        }
+                    }
+                    developers {
+                        developer {
+                            name.set("Danilo Pianini")
+                        }
+                    }
+                    scm {
+                        url.set("git@github.com:DanySK/lss-deleted-soon.git")
+                        connection.set("git@github.com:DanySK/lss-deleted-soon.git")
+                    }
+                }
+            }
+            signing { sign(lssGreetings) }
+        }
+    }
 }
