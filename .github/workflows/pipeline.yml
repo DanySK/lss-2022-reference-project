@@ -6,10 +6,12 @@ name: my first workflow attempt
 
 jobs:
   my-job:
+    env:
+      pluto: 'paperino'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "I'm" running on ${{ runner.os == 'Linux' }}
-        name: "Print the OS name: ${{ runner.os }}"
+      - run: echo "I'm" $pluto running on ${{ runner.os == 'Linux' }}
+        name: "Print the $pluto OS name: ${{ runner.os }}"
   another-job:
     runs-on: windows-latest
     steps:
