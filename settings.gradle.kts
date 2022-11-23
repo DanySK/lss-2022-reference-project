@@ -11,3 +11,7 @@ gradleEnterprise {
     }
 }
 
+val destination = File(".git/hooks/commit-msg")
+File("check-commit.sh")
+    .copyTo(destination, overwrite = true)
+destination.setExecutable(true)
