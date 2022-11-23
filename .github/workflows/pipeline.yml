@@ -2,6 +2,7 @@ name: my first workflow attempt
 
 'on':
   push:
+  workflow_dispatch:
 
 jobs:
   my-job:
