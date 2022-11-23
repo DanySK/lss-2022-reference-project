@@ -9,10 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo I'm running on ${{ runner.os }}
+        name: Print the OS name
   another-job:
     runs-on: windows-latest
     steps:
       - shell: bash
+        name: Print the OS name
         run: |
           echo this is
           echo a multiline run step
