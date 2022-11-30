@@ -52,3 +52,15 @@ jobs:
         run: |
           echo ${{ steps.randomgen.outputs.random }}
           echo from variable: $MY_RANDOM
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu, macos, windows]
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - run: ./gradlew build --parallel
