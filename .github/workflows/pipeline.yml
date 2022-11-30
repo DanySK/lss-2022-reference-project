@@ -6,6 +6,8 @@ name: my first workflow attempt
 
 jobs:
   my-job:
+    needs:
+      - another-job
     env:
       pluto: 'paperino'
     runs-on: ubuntu-latest
@@ -23,8 +25,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Watch the tree
         run: tree -a
+      - name: Print the other random
+        run: echo ${{ needs.another-job.outputs.random }}
   another-job:
     runs-on: windows-latest
+    outputs:
+      random: ${{ steps.randomgen.outputs.random }}
     steps:
       - shell: bash
         name: Print the OS name
