@@ -43,7 +43,7 @@ jobs:
         name: compute a random number
         id: randomgen
         run: |
-          ruby -e 'puts "::set-output name=random::#{rand(1..6)}"'
+          ruby -e 'puts "::set-output name=random::#{rand(11..19)}"'
       - shell: bash
         name: print the previous random
         if: steps.randomgen.outputs.random > 3
@@ -60,7 +60,7 @@ jobs:
       vars: ${{ steps.omg.outputs.list }}
     steps:
       - run: |
-          ruby -e 'puts "::set-output name=list::#{(1..${{ needs.another-job.outputs.random }}).to_a.to_s}"'
+          ruby -e 'puts "::set-output name=list::#{(11..${{ needs.another-job.outputs.random }}).to_a.to_s}"'
         id: omg
   build:
     needs:
@@ -68,7 +68,8 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu, macos, windows]
-        omg: ${{ fromJson(needs.gen-matrix-line.outputs.vars) }}
+        java-version: ${{ fromJson(needs.gen-matrix-line.outputs.vars) }}
+        java-distributor: [temurin, zulu]
     runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Check out repository code
@@ -76,5 +77,12 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - run: |
-          ./gradlew build --parallel || ./gradlew build --parallel || ./gradlew build --parallel
+      - uses: actions/setup-java@v3
+        with:
+          distribution: ${{ matrix.java-distributor }}
+          java-version: ${{ matrix.java-version }}
+      - env:
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
+        run: |
+          ./gradlew build -PsignigngKey=${{ secrets.SIGNING_KEY }} --parallel || ./gradlew build --parallel || ./gradlew build --parallel
