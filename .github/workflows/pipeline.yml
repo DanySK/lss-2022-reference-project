@@ -10,7 +10,10 @@ jobs:
       pluto: 'paperino'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "I'm" $pluto running on ${{ runner.os == 'Linux' }}
+      - run: |
+          pluto=pippo
+          echo "I'm" $pluto running on ${{ runner.os == 'Linux' }}
+          echo ${{ env.pluto }}
         name: "Print the $pluto OS name: ${{ runner.os }}"
   another-job:
     runs-on: windows-latest
