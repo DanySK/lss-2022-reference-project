@@ -40,6 +40,7 @@ jobs:
           ruby -e 'puts "::set-output name=random::#{rand(1..6)}"'
       - shell: bash
         name: print the previous random
+        if: steps.randomgen.outputs.random > 3
         env:
           MY_RANDOM: ${{ steps.randomgen.outputs.random }}
         run: |
