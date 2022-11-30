@@ -33,3 +33,15 @@ jobs:
           echo a multiline run step
           echo running on ${{ runner.os }}
       - run: echo end
+      - shell: bash
+        name: compute a random number
+        id: randomgen
+        run: |
+          ruby -e 'puts "::set-output name=random::#{rand(1..6)}"'
+      - shell: bash
+        name: print the previous random
+        env:
+          MY_RANDOM: ${{ steps.randomgen.outputs.random }}
+        run: |
+          echo ${{ steps.randomgen.outputs.random }}
+          echo from variable: $MY_RANDOM
