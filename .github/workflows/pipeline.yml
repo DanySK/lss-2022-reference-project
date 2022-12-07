@@ -79,6 +79,9 @@ jobs:
             java-distributor: temurin
           - java-version: 15
             java-distributor: temurin
+        include:
+          - java-distributor: microsoft
+            java-version: 17
     runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Check out repository code
