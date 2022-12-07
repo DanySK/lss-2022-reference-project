@@ -82,6 +82,7 @@ jobs:
         include:
           - java-distributor: microsoft
             java-version: 17
+            os: ubuntu
     runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Check out repository code
