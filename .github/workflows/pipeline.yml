@@ -99,3 +99,13 @@ jobs:
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
         run: |
           ./gradlew build --parallel || ./gradlew build --parallel || ./gradlew build --parallel
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - run: docker build . -t lss-test:latest
+      - run: docker run lss-test:latest
