@@ -70,6 +70,15 @@ jobs:
         os: [ubuntu, macos, windows]
         java-version: ${{ fromJson(needs.gen-matrix-line.outputs.vars) }}
         java-distributor: [temurin, zulu]
+        exclude:
+          - java-version: 12
+            java-distributor: temurin
+          - java-version: 13
+            java-distributor: temurin
+          - java-version: 14
+            java-distributor: temurin
+          - java-version: 15
+            java-distributor: temurin
     runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Check out repository code
