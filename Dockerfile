@@ -11,4 +11,4 @@ RUN apt update
 RUN apt install -y git
 RUN ./gradlew compileKotlin
 RUN ./gradlew --stop
-CMD ./gradlew check
+CMD ./gradlew tasks
