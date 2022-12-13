@@ -108,4 +108,4 @@ jobs:
           submodules: recursive
           fetch-depth: 0
       - run: docker build . -t lss-test:latest
-      - run: docker run lss-test:latest
+      - run: docker --rm run lss-test:latest
