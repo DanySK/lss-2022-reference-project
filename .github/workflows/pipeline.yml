@@ -109,3 +109,21 @@ jobs:
           fetch-depth: 0
       - run: docker build . -t lss-test:latest
       - run: docker run --rm lss-test:latest
+  release:
+    needs:
+      - build-image
+      - build
+    runs-on: ubuntu-latest
+    concurrency:
+      group: release
+      cancel-in-progress: false
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - name: Release
+        run: |
+          npm install
+          npx semantic-release
