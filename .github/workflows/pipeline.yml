@@ -110,9 +110,9 @@ jobs:
       - run: docker build . -t lss-test:latest
       - run: docker run --rm lss-test:latest
   release:
-    needs:
-      - build-image
-      - build
+#    needs:
+#      - build-image
+#      - build
     runs-on: ubuntu-latest
     concurrency:
       group: release
@@ -124,6 +124,8 @@ jobs:
           submodules: recursive
           fetch-depth: 0
       - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_TOKEN }}
         run: |
           npm install
           npx semantic-release
