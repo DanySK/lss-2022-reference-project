@@ -1,3 +1,15 @@
+## [1.0.1](https://github.com/DanySK/lss-deleted-soon/compare/1.0.0...1.0.1) (2022-12-14)
+
+
+### Bug Fixes
+
+* **ci:** recover the full CI pipeline functionality ([a955974](https://github.com/DanySK/lss-deleted-soon/commit/a9559744249f8efdba1c18301ab6e04943f31bc7))
+
+
+### Build and continuous integration
+
+* add a success final job ([983cec7](https://github.com/DanySK/lss-deleted-soon/commit/983cec7fac354e7743fdd5e029b7eebbb534d062))
+
 ## 1.0.0 (2022-12-14)
 
 
