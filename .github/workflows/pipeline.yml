@@ -98,7 +98,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
         run: |
-          true || ./gradlew build --parallel || ./gradlew build --parallel || ./gradlew build --parallel
+          ./gradlew build --parallel || ./gradlew build --parallel || ./gradlew build --parallel
   build-image:
     runs-on: ubuntu-latest
     steps:
@@ -110,9 +110,9 @@ jobs:
       - run: docker build . -t lss-test:latest
       - run: docker run --rm lss-test:latest
   release:
-#    needs:
-#      - build-image
-#      - build
+    needs:
+      - build-image
+      - build
     runs-on: ubuntu-latest
     concurrency:
       group: release
