@@ -98,7 +98,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
         run: |
-          ./gradlew build --parallel || ./gradlew build --parallel || ./gradlew build --parallel
+          true || ./gradlew build --parallel || ./gradlew build --parallel || ./gradlew build --parallel
   build-image:
     runs-on: ubuntu-latest
     steps:
